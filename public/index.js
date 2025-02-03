@@ -7,7 +7,7 @@
       const formData = new FormData();
       formData.append("file", inputFile.files[0]);
       const body = formData;
-      body.description = inputDescription.value;
+      body.description = inputFile.value;
       const fetchOptions = {
         method: 'post',
         body: body
