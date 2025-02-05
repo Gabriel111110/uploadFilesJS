@@ -2,6 +2,7 @@ const express = require("express");
 const http = require('http');
 const path = require('path');
 const app = express();
+const fs = require('fs');
 const multer  = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -21,6 +22,14 @@ app.post('/upload', (req, res) => {
     console.log(req.file.filename);    
     res.json({url: "./files/" + req.file.filename});    
   })
+});
+
+app.get('/filelist', (req, res) => {
+  const filesDir = path.join(__dirname, "files");
+  fs.readdir(filesDir, (err, files) => {
+      const fileUrls = files.map(file => `./files/${file}`);
+      res.json(fileUrls);
+  });
 });
 
 const server = http.createServer(app);
